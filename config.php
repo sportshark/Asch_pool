@@ -4,7 +4,7 @@ $lisk_ports = array(0 => '8192');
 return array(
     'host' => 'localhost',
     'username' => 'lisk',
-	'password' => 'lihelisk',
+	'password' => 'XXXX',
 	'bdd' => 'lisk',
 	'lisk_host' => $lisk_nodes,
 	'lisk_port' => $lisk_ports,
@@ -15,7 +15,7 @@ return array(
 	'payout_threshold' => '2',
 	'fixed_withdraw_fee' => '0.1',
 	'withdraw_interval_in_sec' => '259200',
-	'secret' => 'key home gold crime water destroy subway silk weekend nephew win voice',
+	'secret' => 'xxxx',
 	'secondSecret' => '',
 	'public_directory' => 'private'
 );
