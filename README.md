@@ -1,11 +1,10 @@
 # Asch 节点分红功能，修改自thepool.com，在此表示感谢
-This is first and fully open-sourced Lisk delegate forging pool (also known as delegate reward sharing). Written in PHP.
+This is first and fully open-sourced ASCH delegate forging pool (also known as delegate reward sharing). Written in PHP.
 
 # Requirements
 <a href="https://mariadb.org" target="_blank">MariaDB server</a><br>
 <a href="https://memcached.org" target="_blank">Memcached</a><br>
 <a href="http://nginx.org" target="_blank">Nginx</a><br>
-<a href="https://lisk.io/documentation" target="_blank">Lisk Node</a><br>
 <a href="http://www.highcharts.com" target="_blank">Highcharts (included in project)</a><br>
 
 ## Important
@@ -23,7 +22,7 @@ If you are using PHP7
 <pre>
 apt-get install php7-memcached
 </pre>
-Setup your mysql server, nginx and import database scheme <pre>lisk_pool_scheme_db.sql</pre>
+Setup your mysql server, nginx and import database scheme <pre>asch_pool_scheme_db.sql</pre>
 
 Navigate to config.php
 
@@ -63,11 +62,9 @@ Navigate to <pre>/private/</pre> directory and start background scripts:<br>
 <pre>screen -dmS stats php stats.php</pre>
 <br>Withdraw script - this script withdraws revenue as defined in config.
 <pre>screen -dmS withdraw php withdraw.php</pre>
-<br>If you want to support Liskstats contributors and Liskstats itself use also script below. 
-<pre>screen -dmS liskstats php liskstats.php</pre>
 <br>
 Optional
-Balance checker - Simple script to compare total LISK value stored in database in reference to actual LISK stored on delegate account.
+Balance checker - Simple script to compare total ASCH value stored in database in reference to actual ASCH stored on delegate account.
 <pre>php check.php</pre>
 
 <br>
