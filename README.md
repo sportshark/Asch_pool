@@ -1,4 +1,4 @@
-# Lisk Pool
+# Asch 节点分红功能，修改自thepool.com，在此表示感谢
 This is first and fully open-sourced Lisk delegate forging pool (also known as delegate reward sharing). Written in PHP.
 
 # Requirements
@@ -44,15 +44,15 @@ $lisk_ports = array(0 => '8000',1 => '8000');
 'pool_fee' => '25.0%',     //<- adjustable pool fee as float for ex. "25.0%"
 'pool_fee_payout_address' => '17957303129556813956L',   //<- Payout address if fee > 0.0
 'delegate_address' => '17957303129556813956L',    //<- Delegate address - must be valid forging delegate address
-'payout_threshold' => '1',    //<- Payout threshold in LISK
-'fixed_withdraw_fee' => '0.1',    //<- Fixed Withdraw fee in LISK
+'payout_threshold' => '1',    //<- Payout threshold in ASCH
+'fixed_withdraw_fee' => '0.1',    //<- Fixed Withdraw fee in ASCH
 'withdraw_interval_in_sec' => '43200',   //<- Withdraw script interval represented in seconds
 'secret' => 'passphrase1',    //<- Main passphrase the same your as in your forging delegate
 'secondSecret' => 'passphrase2' //<- Second passphrase, if you dont have one leave it empty ex. ""
 ```
 
 # Usage
-Start LISK node as usual, and set up it to forging. But please note that you can forge with different node that one used for hosting pool.
+Start ASCH node as usual, and set up it to forging. But please note that you can forge with different node that one used for hosting pool.
 
 Navigate to <pre>/private/</pre> directory and start background scripts:<br>
 <br>Node height checker, necessary even there is only one defined
