@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <script src="https://cdn.bootcss.com/angular.js/1.6.3/angular.min.js"></script>
+    <style>
+        .box{
+            width: 700px;
+            border: 1px solid;
+        }
+        .box-left{
+            width: 400px;
+            float: left;
+        }
+        .box-right{
+            margin-left: 400px;
+        }
+    </style>
+</head>
+<body>
+<div>
+    <h3>
+        ASCH 受托人投票查询功能
+    </h3>
+    <p>
+        该功能可以查询谁投了你的票，但是你没有回投，以及你投了谁的票，但他没有回投。
+    </p>
+
+
+</div>
+<div ng-app="myApp" ng-controller="siteCtrl">
+    <p>受托人地址：<input type="text" ng-model="d_name" ></p>
+    <p>受托人公钥：<input type="text" ng-model="d_key" ></p>
+    <p>查询时间较长，请稍等1分钟 </p>
+    <p>
+        <button ng-click="query()">查询</button>
+    </p>
+
+    <div class="box">
+        <div class="box-left">
+            <p>以下节点你投票了，但是他没有回投</p>
+            <ul>
+                <li ng-repeat="x in delegates track by $index">
+                    {{ x }}
+                </li>
+            </ul>
+        </div>
+        <div class="box-right">
+            <p>以下节点给你投票了，但是你没有回投</p>
+            <ul>
+                <li ng-repeat="y in accounts track by $index">
+                    {{ y }}
+                </li>
+            </ul>
+        </div>
+    </div>
+
+
+
+</div>
+
+<script>
+    var getit;
+    var mm;
+    var delegates_tmp = new Array();
+    var accounts_tmp=new Array();
+    var mydelegates,myaccounts;
+    var app = angular.module('myApp', []);
+    app.controller('siteCtrl', function($scope, $http) {
+        $scope.query = function() {
+            $http({
+                method: 'GET',
+                url: 'http://asch.pub:8192/api/accounts/delegates?address='+$scope.d_name
+                //A6na6czJLPoPK8yVTV5QESzm4SoUkgefRs
+            }).then(function successCallback(response) {
+                mydelegates=response.data.delegates;
+                //$scope.delegates = response.data.delegates;
+                $http({
+                    method: 'GET',
+                    url: 'http://asch.pub:8192/api/delegates/voters?publicKey='+$scope.d_key
+                    //67e561707f0f4f7e514b54228476f4daa023fb84ef189f2554ef3be5b72434cc
+                }).then(function successCallback(response) {
+                    myaccounts=response.data.accounts;
+                    //开始查找没有回投的人员
+                    angular.forEach(mydelegates, function(data){
+                        angular.forEach(myaccounts, function(data2){
+                            if(JSON.stringify(data2.username)==JSON.stringify(data.username)){
+                                //$scope.delegates=JSON.stringify(data.username);
+
+                                getit=true;
+                                mm++;
+                            }
+                        })
+
+                        if(getit!==true){
+                            delegates_tmp.push(JSON.stringify(data.username));
+                            console.log(delegates_tmp);
+                            //mm++;
+                            getit=false;
+                        }
+                        getit=false;
+                    });
+                    $scope.delegates = delegates_tmp;
+                    //开始查找你没有回投的人员
+                    angular.forEach(myaccounts, function(data){
+                        angular.forEach(mydelegates, function(data2){
+                            if(JSON.stringify(data2.username)==JSON.stringify(data.username)){
+                                //$scope.delegates=JSON.stringify(data.username);
+
+                                getit=true;
+                                mm++;
+                            }
+                        })
+
+                        if(getit!==true){
+                            accounts_tmp.push(JSON.stringify(data.username));
+                            console.log(accounts_tmp);
+                            //mm++;
+                            getit=false;
+                        }
+                        getit=false;
+                    });
+                    $scope.accounts = accounts_tmp;
+                }, function errorCallback(response) {
+                    // 请求失败执行代码
+                });
+            }, function errorCallback(response) {
+                // 请求失败执行代码
+            });
+
+
+        };
+
+    });
+</script>
+
+</body>
+</html>

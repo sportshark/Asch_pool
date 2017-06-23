@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <script src="https://cdn.bootcss.com/angular.js/1.6.3/angular.min.js"></script>
+</head>
+<body>
+<div>
+    <h3>
+        ASCH 受托人投票查询功能
+    </h3>
+    <p>
+        该功能可以查询谁投了你的票，但是你没有回投，以及你投了谁的票，但他没有回投。
+    </p>
+
+    <p>受托人地址：<input type="text" ng-model="d_name"></p>
+    <p>受托人公钥：<input type="text" ng-model="d_key"></p>
+    <p>
+        <button ng-click="query()">查询</button>
+    </p>
+</div>
+<div ng-app="myApp" ng-controller="siteCtrl">
+
+        <ul>
+            <li ng-repeat="x in delegates">
+                {{ x.username + ', ' + x.vote }}
+            </li>
+        </ul>
+
+    </div>
+
+    <script>
+        var app = angular.module('myApp', []);
+        app.controller('siteCtrl', function($scope, $http) {
+            $http({
+                method: 'GET',
+                url: 'http://asch.pub:8192/api/accounts/delegates?address=A6na6czJLPoPK8yVTV5QESzm4SoUkgefRs'
+            }).then(function successCallback(response) {
+                $scope.delegates = response.data.delegates;
+            }, function errorCallback(response) {
+                // 请求失败执行代码
+            });
+
+        });
+    </script>
+
+</body>
+</html>
